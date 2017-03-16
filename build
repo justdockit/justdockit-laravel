@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Create laravel project
+composer create-project laravel/laravel ../laravel
+
+# Build our containers
+docker-compose up -d --build
