@@ -37,7 +37,7 @@ dockit/docker-compose.yml
 php:
     ...
     volumes:
-      - ~/.composer/cache:/home/dockit/.composer/cache 
+      - ~/.composer/cache:/.composer/cache 
     ...
 ```
 
