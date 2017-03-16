@@ -55,7 +55,7 @@ applications:
 5) Edit docker environment variables.  
 If ports 80 and 3306 are already being used on your machine you probably 
 want to change the ports the containers forward to. A .env file is 
-provider with the following variables:  
+provided with the following variables:  
 
 dockit/.env 
 ```
@@ -74,7 +74,8 @@ BEANSTALKD_CONSOLE_PORT=2080
 ```
 
 7) Update laravels .env file. and set the Schema default string length since we 
-using MariaDB 10.1.
+using MariaDB 10.1.  
+
 MyApp/.env
 ```
 ...
