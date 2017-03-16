@@ -4,7 +4,7 @@ services:
   applications:
     image: tianon/true
     volumes:
-      - ../MyApp:/var/www/html
+      - ../:/var/www/html
 
   nginx:
     build:
@@ -21,8 +21,6 @@ services:
     build:
       context: ./php
     image: justdockit/php
-    volumes:
-      - ~/.composer/cache:/.composer/cache
     volumes_from:
       - applications
     networks:
