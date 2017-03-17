@@ -7,12 +7,21 @@ COMPOSE="docker-compose -f docker-compose.yml"
 # Run php artisan command in the php container
 function artisan()
 {   
-    shift
-    $COMPOSE run --rm $TTY \
-        -w /var/www/html \
-        php \
-        php artisan "$@"
-
+    if [[ $1 == artisan ]]; then
+        shift
+        $COMPOSE run --rm $TTY \
+            -u 1000:1000 \
+            -w /var/www/html \
+            php \
+            php artisan "$@"
+    else
+        shift
+        $COMPOSE exec \
+            --user 1000:1000 \
+            php \
+            php artisan "$@"
+    fi
+    
     exit
 }
 
@@ -22,7 +31,7 @@ function composer()
 {
     shift
     $COMPOSE run --rm $TTY \
-        -u www-data \
+        -u 1000:1000 \
         -w /var/www/html \
         php \
         composer $@
@@ -57,7 +66,7 @@ function install_laravel()
     shift
     $COMPOSE run --rm $TTY \
         -w /var/www/html \
-        -u www-data \
+        -u 1000:1000 \
         php \
         composer create-project --prefer-dist laravel/laravel $@
     
@@ -72,16 +81,19 @@ function usage()
     echo "Usage: ./dockit [command]"
     echo
     echo "Commands:"
-    echo "  art        Run php artisan in the php container"
-    echo "  composer   Run composer in the php container"
-    echo "  test|t     Run phpunit php container. Running t requires an already running container, but is faster."
+    echo "  artisan|art                 Run php artisan in a php container."
+    echo "                              If php container is already running, use art it's faster."
+    echo "  composer                    Run composer in a php container."
+    echo "  test|t                      Run phpunit in a php container. "
+    echo "                              If php container is already running, use t it's faster."
+    echo "  install-laravel <folder>    Same as running composer create-project --prefer-dist laravel/laravel <folder>"
     echo
-    echo "  To run any docker-compose command just use ./dockit <command> i.e ./dockit ps"
+    echo "  Optionally to run any docker-compose command just use ./dockit [command] i.e ./dockit ps"
 }
 
 # Catch the command and run it.
 case $1 in
-    (art)   
+    (artisan|art)   
         artisan $@
         ;;
     (composer)   
@@ -94,6 +106,10 @@ case $1 in
         test $@
         ;;
     (-h | --help | "")
+        usage
+        exit
+        ;;
+    ("")
         usage
         exit
         ;;

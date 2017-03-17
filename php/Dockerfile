@@ -34,14 +34,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV COMPOSER_HOME=/.composer
-# Run id -u to get your uid.
-# RUN usermod -u 1000 www-data
-
-# ARG PUID=1001
-# ARG PGID=1001
-# RUN groupadd -g $PGID dockit && \
-#     useradd -u $PUID -g dockit -m dockit
-
 
 # Hack to change uid of 'www-data' to 1000
 RUN usermod -u 1000 www-data

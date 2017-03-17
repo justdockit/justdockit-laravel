@@ -4,7 +4,7 @@ MAINTAINER Alexander van Zyl <vanzyl.alex@gmail.com>
 
 RUN mkdir -p /var/www/html
 
-# Permissions
+# Hack to change uid of 'www-data' to 1000
 RUN usermod -u 1000 www-data
 
 COPY default.conf /etc/nginx/conf.d/default.conf
