@@ -1,5 +1,7 @@
-# Just DockIt for Laravel
+[![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)]
+# Just DockIt for Laravel (http://forthebadge.com)
 A simple docker development environment built for Laravel.
+
 
 Set up for CI and Production environments coming soon :)
 
@@ -27,7 +29,8 @@ git clone https://github.com/justdockit/justdockit-laravel.git dockit && cd dock
 
 3) Install Laravel in your project folder. 
 ```bash
-./dockit install-laravel MyApp # same as running composer create-project --prefer-dist laravel/laravel MyApp
+./dockit install-laravel MyApp 
+# same as running composer create-project --prefer-dist laravel/laravel MyApp
 ```
 If you have composer installed on your machine and you would like to keep the cache in 
 sync with the container add the following volume to the docker-compose.yml file:
@@ -115,3 +118,34 @@ public function boot()
         ...
 ```
 
+If all went well you should see the laravel welcome page at localhost or localhost:8000 if you changed the APP_PORT to 8000.
+
+
+## Workflow
+
+```bash
+#Starting and stopping containers.
+./dockit stop # or docker-compose stop
+./dockit start # or docker-compose start
+
+# Running composer in a container.
+./dockit composer
+
+# Running artisan
+./dockit art     # if the php container is running, this is a lot quicker.
+./docker artisan # starts up a new php container runs artisan command and then removes it.
+
+# Running tests
+./docket t    # if the php container is running, this is a lot quicker.
+./dockit test # starts up a new php container to runs tests and then removes it.
+
+```
+
+## Caveat
+Once you have everything running, if you happen change the location of your laravel folder. You need to updated the applications volume in the docker-compose.yml file and remove the applications container before running any of the above commands. When required the applications container will be rebuilt with the new volume.
+
+```bash
+./dockit rm -f applications # or docker-compose rm -f applications
+```
+
+Happy Coding!
