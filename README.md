@@ -1,4 +1,4 @@
-[![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)]
+![forthebadge](http://forthebadge.com/images/badges/built-by-developers.svg)
 # Just DockIt for Laravel (http://forthebadge.com)
 A simple docker development environment built for Laravel.
 
