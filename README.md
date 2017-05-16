@@ -129,10 +129,11 @@ If all went well you should see the laravel welcome page at localhost or localho
 ```
 
 ## Caveat
-Once you have everything running, if you happen change the location of your laravel folder. You need to updated the applications volume in the docker-compose.yml file and remove the applications container before running any of the above commands. When required the applications container will be rebuilt with the new volume.
+Once you have everything running, if you happen change the location of your laravel folder. You need to updated the applications volume in the docker-compose.yml file and remove the applications container before running any of the above commands. Then rebuild all the images.
 
 ```bash
 ./dockit rm -f applications # or docker-compose rm -f applications
+./docker up -d --build # rebuild
 ```
 
 Happy Coding!
