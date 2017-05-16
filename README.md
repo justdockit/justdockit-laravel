@@ -22,16 +22,17 @@ Set up for CI and Production environments coming soon :)
 mkdir MyAwesomeProject && cd MyAwesomeProject
 ```
 
-2) Clone Just Dockit into your empty project folder.
+2) If you starting fresh clone Just Dockit and install Laravel.
 ```bash
 git clone https://github.com/justdockit/justdockit-laravel.git dockit && cd dockit
-```
-
-3) Install Laravel in your project folder. 
-```bash
 ./dockit install-laravel MyApp 
 # same as running composer create-project --prefer-dist laravel/laravel MyApp
 ```
+2.1) If you have an existing project then add Just Dockit to your project folder:
+```bash
+git submodule add https://github.com/justdockit/justdockit-laravel.git dockit
+```
+
 If you have composer installed on your machine and you would like to keep the cache in 
 sync with the container add the following volume to the docker-compose.yml file:
 
@@ -44,39 +45,25 @@ php:
     ...
 ```
 
-4) Add the MyApp folder to the applications container in docker-compose.yml.  
-The path is relative to docker-compose.yml.
-
-dockit/docker-compose.yml
-```yaml
-applications:
-    image: tianon/true
-    volumes:
-      - ../MyApp/:/var/www/html
-```
-
-5) Edit docker environment variables.  
-If ports 80 and 3306 are already being used on your machine you probably 
-want to change the ports the containers forward to. A .env file is 
-provided with the following variables:  
+3) Set you application path and change any ports in the .env file:
 
 dockit/.env 
 ```
-APP_PORT=80
-DB_PORT=3306
-DB_ROOT_PASS=secret
-DB_NAME=homestead
-DB_USER=homestead
-DB_PASS=secret
-BEANSTALKD_CONSOLE_PORT=2080
+### APPLICATION ###
+APP_PATH=../
+
+### NGINX ###
+NGINX_HOST_HTTP_PORT=80
+NGINX_HOST_HTTPS_PORT=443
+...
 ```
 
-6) Build images and start the containers.
+4) Build images and start the containers.
 ```bash
 ./dockit up -d --build # this is the same as running docker-compose up -d --build
 ```
 
-7) Update laravels .env file. and set the Schema default string length since we 
+5) Update laravels .env file. and set the Schema default string length since we 
 using MariaDB 10.1.  
 
 MyApp/.env
@@ -110,7 +97,7 @@ public function boot()
   
 ```
 
-8) Inside config/database change the redis client to phpredis.
+6) Inside config/database change the redis client to phpredis.
 ```php
  'redis' => [
 

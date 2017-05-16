@@ -22,8 +22,8 @@ RUN apt-get update \
         pdo_pgsql \
         gd \
         zip \
-    && pecl install redis-3.1.1 \
-    && pecl install xdebug-2.5.0 \
+    && pecl install redis-3.1.2 \
+    && pecl install xdebug-2.5.4 \
     && docker-php-ext-enable redis xdebug \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir -p /run/php \
