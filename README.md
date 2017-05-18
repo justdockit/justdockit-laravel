@@ -9,12 +9,15 @@ Set up for CI and Production environments coming soon :)
 - [Docker](https://docs.docker.com/engine/installation/) & [Docker compose](https://docs.docker.com/compose/install/)
 
 ## What's in the box?
-- PHP 7.1
-- NGINX 1.11
-- MariaDB 10.1
-- Node 7
-- Redis 3.2
+- PHP 7.1 and Composer
+- PHPRedis (only if set to install see .env file)
+- Xdebug (only if set to install see .env file)
+- NGINX
+- MariaDB
+- Node
+- Redis 
 - Beanstalkd & Beanstalkd console.
+- PhpMyAdmin
 
 ## New project set up
 1) Create an empty project folder.

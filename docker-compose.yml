@@ -13,7 +13,7 @@ services:
     volumes_from:
       - applications
     ports:
-      - ${NGINX_HOST_HTTP_PORT}:80
+      - "${NGINX_HOST_HTTP_PORT}:80"
     networks:
       - justdockit_network
 
@@ -25,6 +25,9 @@ services:
       - applications
     networks:
       - justdockit_network
+    args:
+      - INSTALL_XDEBUG=${PHP_INSTALL_XDEBUG}
+      - INSTALL_PHPREDIS=${PHP_INSTALL_PHPREDIS}
 
   node:
     build:
@@ -42,7 +45,7 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
     ports:
-      - ${MARIADB_PORT}:3306
+      - "${MARIADB_PORT}:3306"
     environment:
       MYSQL_ROOT_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${MARIADB_DATABASE}"
@@ -72,7 +75,7 @@ services:
       context: ./beanstalkd_console
     image: justdockit/beanstalkd_console
     ports:
-      - ${BEANSTALKD_CONSOLE_PORT}:2080
+      - "${BEANSTALKD_CONSOLE_PORT}:2080"
     networks:
       - justdockit_network
 
@@ -83,7 +86,7 @@ services:
         PMA_USER: "root"
         PMA_PASSWORD: "${MARIADB_ROOT_PASSWORD}"
       ports:
-        - ${PMA_PORT}:80
+        - "${PMA_PORT}:80"
       volumes:
         - pma_session:/sessions
       networks:
