@@ -20,14 +20,14 @@ services:
   php:
     build:
       context: ./php
+      args:
+        - INSTALL_XDEBUG=${PHP_INSTALL_XDEBUG}
+        - INSTALL_PHPREDIS=${PHP_INSTALL_PHPREDIS}
     image: justdockit/php
     volumes_from:
       - applications
     networks:
       - justdockit_network
-    args:
-      - INSTALL_XDEBUG=${PHP_INSTALL_XDEBUG}
-      - INSTALL_PHPREDIS=${PHP_INSTALL_PHPREDIS}
 
   node:
     build:

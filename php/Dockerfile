@@ -41,11 +41,10 @@ ENV COMPOSER_HOME=/.composer
 # Only install xdbug if it has been required.
 ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # Install the xdebug extension
-    pecl install xdebug \
-    && docker-php-ext-enable xdebug
-
-;fi
+        # Install the xdebug extension
+        pecl install xdebug \
+        && docker-php-ext-enable xdebug \
+    ;fi
 
 # Copy xdebug configration for remote debugging
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
@@ -53,11 +52,11 @@ COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 # Only install PhpRedis if it has been required.
 ARG INSTALL_PHPREDIS=false
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
-    # Install Php Redis Extension
-    pecl install redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis \
-;fi
+        # Install Php Redis Extension
+        pecl install redis \
+        &&  rm -rf /tmp/pear \
+        &&  docker-php-ext-enable redis \
+    ;fi
 
 # Hack to change uid of 'www-data' to 1000
 # This is to handle file permissions between host and container
