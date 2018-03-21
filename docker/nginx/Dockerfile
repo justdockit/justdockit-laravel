@@ -1,6 +1,7 @@
 FROM nginx:1.13
 
-MAINTAINER Alexander van Zyl <vanzyl.alex@gmail.com>
+LABEL maintainer="Alexander van Zyl <vanzyl.alex@gmail.com>"
+LABEL version="1.0.0"
 
 RUN mkdir -p /var/www/html
 

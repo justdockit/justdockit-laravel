@@ -7,7 +7,7 @@ COMPOSE="docker-compose -f docker-compose.yml"
 # Run php artisan command in the php container
 function artisan()
 {   
-    if [[ $1 == artisan ]]; then
+    if [ $1 == artisan ]; then
         shift
         $COMPOSE run --rm $TTY \
             -u 1000:1000 \
@@ -43,7 +43,7 @@ function composer()
 # Run phpunit command in the php container.
 function test()
 {
-    if [[ $1 == "test" ]]; then
+    if [ $1 == "test" ]; then
         shift
         $COMPOSE run --rm $TTY \
             -w /var/www/html \
@@ -64,13 +64,14 @@ function test()
 function install_laravel()
 {
     shift
+    if [ ! -d "./application" ]; then
+        mkdir application
+    fi
     $COMPOSE run --rm $TTY \
         -w /var/www/html \
         -u 1000:1000 \
         php \
-        composer create-project --prefer-dist laravel/laravel $@
-    
-    $COMPOSE rm -f applications
+        composer create-project --prefer-dist laravel/laravel .
     exit
 }
 
@@ -86,7 +87,7 @@ function usage()
     echo "  composer                    Run composer in a php container."
     echo "  test|t                      Run phpunit in a php container. "
     echo "                              If php container is already running, use t it's faster."
-    echo "  install-laravel <folder>    Same as running composer create-project --prefer-dist laravel/laravel <folder>"
+    echo "  install-laravel             Install Laravel inside a directory called application"
     echo
     echo "  Optionally to run any docker-compose command just use ./dockit [command] i.e ./dockit ps"
 }

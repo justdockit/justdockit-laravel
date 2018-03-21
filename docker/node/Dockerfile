@@ -1,6 +1,7 @@
-FROM node:7
+FROM node:8
 
-MAINTAINER Alexander van Zyl <vanzyl.alex@gmail.com>
+LABEL maintainer="Alexander van Zyl <vanzyl.alex@gmail.com>"
+LABEL version="1.0.0"
 
 RUN apt-get install -y git \
     && apt-get autoclean \

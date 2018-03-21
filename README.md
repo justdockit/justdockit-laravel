@@ -9,14 +9,13 @@ Set up for CI and Production environments coming soon :)
 - [Docker](https://docs.docker.com/engine/installation/) & [Docker compose](https://docs.docker.com/compose/install/)
 
 ## What's in the box?
-- PHP 7.1 and Composer
+- PHP 7.2 and Composer
 - PHPRedis (only if set to install see .env file)
 - Xdebug (only if set to install see .env file)
 - NGINX
 - MariaDB
 - Node
 - Redis 
-- Beanstalkd & Beanstalkd console.
 - PhpMyAdmin
 
 ## New project set up
@@ -25,15 +24,17 @@ Set up for CI and Production environments coming soon :)
 mkdir MyAwesomeProject && cd MyAwesomeProject
 ```
 
-2) If you starting fresh clone Just Dockit and install Laravel.
+2) If you starting fresh, clone Just Dockit and install Laravel.
 ```bash
-git clone https://github.com/justdockit/justdockit-laravel.git dockit && cd dockit
-./dockit install-laravel MyApp 
-# same as running composer create-project --prefer-dist laravel/laravel MyApp
+git clone https://github.com/justdockit/justdockit-laravel.git .
+# remove the .git directory as you will be starting your own repository.
+rm -rf .git 
+# Go ahead and install laravel inside a derictory called application which will be created for you.
+./dockit install-laravel 
 ```
-2.1) If you have an existing project then add Just Dockit to your project folder:
+2.1) If you have an existing project then add Just Dockit the root of your project folder:
 ```bash
-git submodule add https://github.com/justdockit/justdockit-laravel.git dockit
+git submodule add https://github.com/justdockit/justdockit-laravel.git .
 ```
 
 If you have composer installed on your machine and you would like to keep the cache in 
@@ -50,10 +51,10 @@ php:
 
 3) Set you application path and change any ports in the .env file:
 
-dockit/.env 
+.env 
 ```
 ### APPLICATION ###
-APP_PATH=../
+APP_PATH=./application
 
 ### NGINX ###
 NGINX_HOST_HTTP_PORT=80
@@ -66,41 +67,24 @@ NGINX_HOST_HTTPS_PORT=443
 ./dockit up -d --build # this is the same as running docker-compose up -d --build
 ```
 
-5) Update laravels .env file. and set the Schema default string length since we 
-using MariaDB 10.1.  
-
-MyApp/.env
+5) Update laravels .env file.
+ 
+application/.env
 ```
 ...
 DB_HOST=mariadb
 ...
 
+# If you are using redis
 CACHE_DRIVER=redis
 SESSION_DRIVER=redis
-QUEUE_DRIVER=beanstalkd
+QUEUE_DRIVER=redis
 
 REDIS_HOST=redis
 ...
 ```
-and
 
-MyApp/app/Providers/AppServiceProvider.php
-```php
-use Illuminate\Support\Facades\Schema;
-
-/**
- * Bootstrap any application services.
- *
- * @return void
- */
-public function boot()
-{
-    Schema::defaultStringLength(191);
-}
-  
-```
-
-6) Inside config/database change the redis client to phpredis.
+6) Inside application/config/database change the redis client to phpredis.
 ```php
  'redis' => [
 
@@ -129,14 +113,6 @@ If all went well you should see the laravel welcome page at localhost or localho
 ./docket t    # if the php container is running, this is a lot quicker.
 ./dockit test # starts up a new php container to runs tests and then removes it.
 
-```
-
-## Caveat
-Once you have everything running, if you happen change the location of your laravel folder. You need to updated the applications volume in the docker-compose.yml file and remove the applications container before running any of the above commands. Then rebuild all the images.
-
-```bash
-./dockit rm -f applications # or docker-compose rm -f applications
-./docker up -d --build # rebuild
 ```
 
 Happy Coding!

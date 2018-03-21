@@ -1,6 +1,7 @@
-FROM php:7.1-fpm
+FROM php:7.2-fpm
 
-MAINTAINER Alexander van Zyl <vanzyl.alex@gmail.com>
+LABEL maintainer="Alexander van Zyl <vanzyl.alex@gmail.com>"
+LABEL version="1.0.0"
 
 # Install required PHP extensions and their dependencies.
 RUN apt-get update \
@@ -8,14 +9,13 @@ RUN apt-get update \
         libpq-dev \
         libmemcached-dev \
         libjpeg62-turbo-dev \
-        libpng12-dev \
+        libpng-dev \
         libfreetype6-dev \
         libssl-dev \
-        libmcrypt-dev \
         curl \
         git \
     && docker-php-ext-install \
-        mcrypt \
+        mbstring \
         bcmath \
         pdo_mysql \
         pdo_pgsql \
